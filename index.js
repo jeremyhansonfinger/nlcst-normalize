@@ -32,9 +32,11 @@ var EMPTY = '';
  * @param {string} value - Value to normalize.
  * @param {boolean} allowApostrophes - Do not strip
  *   apostrophes.
+ * @param {boolean} allowDashes - Do not strip
+ *   dashes.
  * @return {string} - Normalized `value`.
  */
-function normalize(value, allowApostrophes) {
+function normalize(value, allowApostrophes, allowDashes) {
     var result = (typeof value === 'string' ? value : toString(value))
         .toLowerCase();
 
@@ -42,6 +44,13 @@ function normalize(value, allowApostrophes) {
         return result
             .replace(APOSTROPHE, QUOTE)
             .replace(DASH, EMPTY);
+    
+    }
+
+    if (allowDashes) {
+        return result
+            .replace(APOSTROPHE, EMPTY)
+            .replace(QUOTE, EMPTY);
     }
 
     return result.replace(ALL, EMPTY);
