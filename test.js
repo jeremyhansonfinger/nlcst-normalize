@@ -133,6 +133,29 @@ test('normalize(value, allowApostrophes)', function (t) {
         'should normalize dashes (node)'
     );
 
+        t.equal(
+        normalize({
+            'type': 'WordNode',
+            'children': [
+                {
+                    'type': 'TextNode',
+                    'value': 'Block'
+                },
+                {
+                    'type': 'PunctuationNode',
+                    'value': '-'
+                },
+                {
+                    'type': 'TextNode',
+                    'value': 'level'
+                }
+            ]
+        }, false, true),
+        'block-level',
+        'should not normalize dashes (node) when specified'
+    );
+
+
     t.equal(
         normalize([
             {
@@ -156,6 +179,12 @@ test('normalize(value, allowApostrophes)', function (t) {
         normalize('he’ll', true),
         'he\'ll',
         'should normalize apostrophes when specified'
+    );
+
+    t.equal(
+        normalize('drop-down menu', false, true),
+        'drop-down menu',
+        'should not normalize dashes when specified'
     );
 
     t.end();
